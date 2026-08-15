@@ -110,6 +110,11 @@ func main() {
 	if err := loadEnv(".env"); err != nil && !os.IsNotExist(err) {
 		log.Fatalf("failed to load .env: %v", err)
 	}
+	if os.Getenv("ACCESS_TOKEN") == "" {
+		log.Fatal("ACCESS_TOKEN is not configured in .env")
+	}
+
+	go runPresence()
 
 	http.HandleFunc("/api/data", getData)
 

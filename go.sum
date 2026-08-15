@@ -1,0 +1,6 @@
+github.com/hugolgst/rich-go v0.0.0-20240715122152-74618cc1ace2 h1:9qOViOQGFIP5ar+2NorfAIsfuADEKXtklySC0zNnYf4=
+github.com/hugolgst/rich-go v0.0.0-20240715122152-74618cc1ace2/go.mod h1:nGaW7CGfNZnhtiFxMpc4OZdqIexGXjUlBnlmpZmjEKA=
+github.com/maintainer64/rich-go v0.0.0-20240305072519-f8a27e7dc1ed h1:WFFBOg7+cGauMzn8kENCr9YY4iBFRpbgwE6HQi0xX2E=
+github.com/maintainer64/rich-go v0.0.0-20240305072519-f8a27e7dc1ed/go.mod h1:Ie/pUaMg5ItXK5iGpde0KCxPf1jXTvIQ0V2kbAOOtoo=
+gopkg.in/natefinch/npipe.v2 v2.0.0-20160621034901-c1b8fa8bdcce h1:+JknDZhAj8YMt7GC73Ei8pv4MzjDUNPHgQWJdtMAaDU=
+gopkg.in/natefinch/npipe.v2 v2.0.0-20160621034901-c1b8fa8bdcce/go.mod h1:5AcXVHNjg+BDxry382+8OKon8SEWiKktQR07RKPsv1c=

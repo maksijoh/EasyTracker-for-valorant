@@ -3,6 +3,8 @@
 Локальное Go-приложение получает ранг Valorant через HenrikDev API и раз в
 минуту обновляет Discord Rich Presence текущего пользователя.
 
+Репозиторий: [maksijoh/EasyTracker-for-valorant](https://github.com/maksijoh/EasyTracker-for-valorant)
+
 ## Настройка
 
 Скопируйте отслеживаемый шаблон `.env.example` в локальный `.env`:
@@ -44,3 +46,8 @@ http://localhost:8080/api/data?name=ваше_имя&tag=ваш_тег&region=eu
 
 Панель повторно отправляется Discord каждые 15 секунд, поэтому после выхода из
 матча она восстанавливается автоматически без перезапуска программы.
+
+## Disclaimer
+
+This project is not affiliated with or endorsed by Riot Games. VALORANT is a
+trademark of Riot Games, Inc.

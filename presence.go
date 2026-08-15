@@ -82,9 +82,6 @@ func updatePresence(name, tag, region string) error {
 		Details:   fmt.Sprintf("%s — %d RR", rank, mmr.Data.Current.RR),
 		State:     change,
 		LargeText: fmt.Sprintf("%s#%s • %s", name, tag, strings.ToUpper(region)),
-		Buttons: []*discord.Button{
-			{Label: "Valorant Tracker", Url: "https://tracker.gg/valorant"},
-		},
 	})
 }
 

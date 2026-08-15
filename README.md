@@ -9,7 +9,7 @@ HenrikDev API и показывает его в Discord Rich Presence. Оно о
 
 ## Быстрый запуск
 
-1. Скачайте `EasyTracker-v1.0.0-windows-amd64.exe` со страницы Releases.
+1. Скачайте `EasyTracker-v1.1.0-windows-amd64.exe` со страницы Releases.
 2. Запустите Discord Desktop.
 3. Запустите скачанный EXE двойным кликом.
 4. При первом запуске заполните окно настройки и нажмите **Сохранить и запустить**.
@@ -37,7 +37,7 @@ HenrikDev API и показывает его в Discord Rich Presence. Оно о
 Чтобы снова открыть окно настройки:
 
 ```powershell
-.\EasyTracker-v1.0.0-windows-amd64.exe --configure
+.\EasyTracker-v1.1.0-windows-amd64.exe --configure
 ```
 
 ## Иконка Discord

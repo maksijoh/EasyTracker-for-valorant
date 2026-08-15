@@ -1,51 +1,76 @@
-# Valorant Discord Rich Presence
+# EasyTracker for Valorant
 
-Локальное Go-приложение получает ранг Valorant через HenrikDev API и раз в
-минуту обновляет Discord Rich Presence текущего пользователя.
+EasyTracker — локальное Windows-приложение, которое получает ранг игрока через
+HenrikDev API и показывает его в Discord Rich Presence. Оно отображает текущий
+ранг, RR и изменение рейтинга после последнего матча. После выхода из Valorant
+панель восстанавливается автоматически, без перезапуска программы.
 
-Репозиторий: [maksijoh/EasyTracker-for-valorant](https://github.com/maksijoh/EasyTracker-for-valorant)
+[Скачать последнюю версию](https://github.com/maksijoh/EasyTracker-for-valorant/releases/latest)
 
-## Настройка
+## Быстрый запуск
 
-Скопируйте отслеживаемый шаблон `.env.example` в локальный `.env`:
+1. Скачайте `EasyTracker-v1.0.0-windows-amd64.exe` со страницы Releases.
+2. Запустите Discord Desktop.
+3. Запустите скачанный EXE двойным кликом.
+4. При первом запуске заполните окно настройки и нажмите **Сохранить и запустить**.
+5. Оставьте EasyTracker запущенным вместе с Discord.
+
+Устанавливать Go, открывать терминал и вручную создавать `.env` для релизной
+версии не требуется.
+
+## Первоначальная настройка
+
+Окно первого запуска попросит:
+
+- **HenrikDev API key** — получить ключ можно в
+  [HenrikDev Dashboard](https://api.henrikdev.xyz/dashboard/api-keys);
+- **Discord Application ID** — находится в
+  [Discord Developer Portal](https://discord.com/developers/applications) в
+  разделе приложения **General Information**;
+- **Riot Name** — часть Riot ID перед `#`;
+- **Riot Tag** — часть Riot ID после `#`;
+- **Регион** — `eu`, `na`, `latam`, `br`, `ap` или `kr`.
+
+Настройки и API key сохраняются только локально в `.env` рядом с EXE. Этот файл
+игнорируется Git и не должен публиковаться.
+
+Чтобы снова открыть окно настройки:
 
 ```powershell
-Copy-Item .env.example .env
+.\EasyTracker-v1.0.0-windows-amd64.exe --configure
 ```
 
-Затем заполните `.env` своими значениями:
+## Иконка Discord
 
-```env
-ACCESS_TOKEN=ваш_ключ_HenrikDev
-DISCORD_APP_ID=1538271778651111514
-DISCORD_LARGE_IMAGE=valorant
-RIOT_NAME=ваше_имя
-RIOT_TAG=ваш_тег
-RIOT_REGION=eu
-```
+Владелец Discord-приложения должен один раз загрузить
+`assets/valorant-presence.png` в **Rich Presence → Art Assets → Add Image** и
+назвать asset точно `valorant`. После загрузки Discord может обновлять asset
+несколько минут.
 
-Запустите Discord Desktop, затем приложение:
+## Диагностика
 
-```powershell
-go run .
-```
+EasyTracker пишет журнал работы в `EasyTracker.log` рядом с EXE. Если панель не
+появляется, проверьте, что Discord Desktop и EasyTracker запущены от одного
+пользователя и с одинаковым уровнем прав.
 
-Discord и приложение должны быть запущены от одного пользователя и с
-одинаковым уровнем прав. Веб-эндпоинт истории матчей доступен по адресу:
+Локальный JSON-эндпоинт истории матчей:
 
 ```text
 http://localhost:8080/api/data?name=ваше_имя&tag=ваш_тег&region=eu
 ```
 
-## Иконка Discord
+## Сборка из исходников
 
-Загрузите `assets/valorant-presence.png` в Discord Developer Portal для своего
-приложения: **Rich Presence → Art Assets → Add Image**. Имя asset должно быть
-точно `valorant`. После загрузки подождите несколько минут и перезапустите
-приложение.
+```powershell
+.\build.ps1
+```
 
-Панель повторно отправляется Discord каждые 15 секунд, поэтому после выхода из
-матча она восстанавливается автоматически без перезапуска программы.
+Готовый EXE появится в `dist/`. Для разработки также можно использовать
+`go run .`.
+
+## License
+
+[MIT](LICENSE)
 
 ## Disclaimer
 

@@ -7,12 +7,24 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"path/filepath"
 	"strings"
 	"time"
 )
 
 var client = &http.Client{
 	Timeout: 10 * time.Second,
+}
+
+var version = "dev"
+
+func setupLogging(configFile string) func() {
+	logFile, err := os.OpenFile(filepath.Join(filepath.Dir(configFile), "EasyTracker.log"), os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0600)
+	if err != nil {
+		return func() {}
+	}
+	log.SetOutput(logFile)
+	return func() { _ = logFile.Close() }
 }
 
 func loadEnv(filename string) error {
@@ -107,17 +119,39 @@ func getData(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	if err := loadEnv(".env"); err != nil && !os.IsNotExist(err) {
-		log.Fatalf("failed to load .env: %v", err)
+	path := configPath()
+	closeLog := setupLogging(path)
+	defer closeLog()
+
+	if err := loadEnv(path); err != nil && !os.IsNotExist(err) {
+		showFatalError("Не удалось прочитать настройки: " + err.Error())
+		return
 	}
-	if os.Getenv("ACCESS_TOKEN") == "" {
-		log.Fatal("ACCESS_TOKEN is not configured in .env")
+
+	forceConfigure := false
+	for _, argument := range os.Args[1:] {
+		if argument == "--configure" {
+			forceConfigure = true
+		}
+	}
+	config := currentConfig()
+	if forceConfigure || !config.valid() {
+		saved, err := showConfigWindow(path, config)
+		if err != nil {
+			showFatalError(err.Error())
+			return
+		}
+		if !saved {
+			return
+		}
 	}
 
 	go runPresence()
 
 	http.HandleFunc("/api/data", getData)
 
-	log.Println("http://localhost:8080/api/data")
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Printf("EasyTracker %s started", version)
+	if err := http.ListenAndServe(":8080", nil); err != nil {
+		showFatalError("Не удалось запустить локальный сервер: " + err.Error() + "\n\nВозможно, EasyTracker уже запущен.")
+	}
 }

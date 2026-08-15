@@ -10,8 +10,8 @@ if ($LASTEXITCODE -ne 0) { throw "Failed to generate Windows resources" }
 
 go build `
     -trimpath `
-    -ldflags "-s -w -H windowsgui -X main.version=1.1.0" `
-    -o dist/EasyTracker-v1.1.0-windows-amd64.exe .
+    -ldflags "-s -w -H windowsgui -X main.version=1.1.1" `
+    -o dist/EasyTracker-v1.1.1-windows-amd64.exe .
 if ($LASTEXITCODE -ne 0) { throw "Failed to build EasyTracker" }
 
-Write-Host "Built dist/EasyTracker-v1.1.0-windows-amd64.exe"
+Write-Host "Built dist/EasyTracker-v1.1.1-windows-amd64.exe"

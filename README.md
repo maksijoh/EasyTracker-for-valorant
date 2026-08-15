@@ -9,7 +9,7 @@ HenrikDev API и показывает его в Discord Rich Presence. Оно о
 
 ## Быстрый запуск
 
-1. Скачайте `EasyTracker-v1.1.0-windows-amd64.exe` со страницы Releases.
+1. Скачайте `EasyTracker-v1.1.1-windows-amd64.exe` со страницы Releases.
 2. Запустите Discord Desktop.
 3. Запустите скачанный EXE двойным кликом.
 4. При первом запуске заполните окно настройки и нажмите **Сохранить и запустить**.
@@ -37,15 +37,13 @@ HenrikDev API и показывает его в Discord Rich Presence. Оно о
 Чтобы снова открыть окно настройки:
 
 ```powershell
-.\EasyTracker-v1.1.0-windows-amd64.exe --configure
+.\EasyTracker-v1.1.1-windows-amd64.exe --configure
 ```
 
 ## Иконка Discord
 
-Владелец Discord-приложения должен один раз загрузить
-`assets/valorant-presence.png` в **Rich Presence → Art Assets → Add Image** и
-назвать asset точно `valorant`. После загрузки Discord может обновлять asset
-несколько минут.
+Иконка Rich Presence загружается автоматически по HTTPS из этого репозитория.
+Вручную добавлять Art Asset в Discord Developer Portal не требуется.
 
 ## Диагностика
 

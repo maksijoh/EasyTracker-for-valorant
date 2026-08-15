@@ -15,6 +15,8 @@ import (
 
 const defaultDiscordAppID = "1538271778651111514"
 
+const defaultPresenceImage = "https://raw.githubusercontent.com/maksijoh/EasyTracker-for-valorant/main/assets/valorant-presence.png"
+
 type mmrResponse struct {
 	Status int `json:"status"`
 	Data   struct {
@@ -37,6 +39,14 @@ func envOr(key, fallback string) string {
 		return value
 	}
 	return fallback
+}
+
+func presenceImage() string {
+	configured := strings.TrimSpace(os.Getenv("DISCORD_LARGE_IMAGE"))
+	if configured == "" || strings.EqualFold(configured, "valorant") {
+		return defaultPresenceImage
+	}
+	return configured
 }
 
 func fetchMMR(name, tag, region string) (mmrResponse, error) {
@@ -81,7 +91,7 @@ func buildPresence(name, tag, region string) (discord.Activity, error) {
 	return discord.Activity{
 		Details:    fmt.Sprintf("%s — %d RR", rank, mmr.Data.Current.RR),
 		State:      change,
-		LargeImage: envOr("DISCORD_LARGE_IMAGE", "valorant"),
+		LargeImage: presenceImage(),
 		LargeText:  fmt.Sprintf("%s#%s • %s", name, tag, strings.ToUpper(region)),
 	}, nil
 }

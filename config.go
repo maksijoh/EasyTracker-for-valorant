@@ -51,7 +51,7 @@ func saveConfig(path string, c appConfig) error {
 	values := map[string]string{
 		"ACCESS_TOKEN":        c.AccessToken,
 		"DISCORD_APP_ID":      c.DiscordAppID,
-		"DISCORD_LARGE_IMAGE": "valorant",
+		"DISCORD_LARGE_IMAGE": defaultPresenceImage,
 		"RIOT_NAME":           c.RiotName,
 		"RIOT_TAG":            c.RiotTag,
 		"RIOT_REGION":         c.RiotRegion,
@@ -63,8 +63,8 @@ func saveConfig(path string, c appConfig) error {
 	}
 
 	content := fmt.Sprintf(
-		"ACCESS_TOKEN=%s\nDISCORD_APP_ID=%s\nDISCORD_LARGE_IMAGE=valorant\nRIOT_NAME=%s\nRIOT_TAG=%s\nRIOT_REGION=%s\n",
-		c.AccessToken, c.DiscordAppID, c.RiotName, c.RiotTag, c.RiotRegion,
+		"ACCESS_TOKEN=%s\nDISCORD_APP_ID=%s\nDISCORD_LARGE_IMAGE=%s\nRIOT_NAME=%s\nRIOT_TAG=%s\nRIOT_REGION=%s\n",
+		c.AccessToken, c.DiscordAppID, defaultPresenceImage, c.RiotName, c.RiotTag, c.RiotRegion,
 	)
 	if err := os.WriteFile(path, []byte(content), 0600); err != nil {
 		return err

@@ -66,10 +66,10 @@ func fetchMMR(name, tag, region string) (mmrResponse, error) {
 	return result, nil
 }
 
-func updatePresence(name, tag, region string) error {
+func buildPresence(name, tag, region string) (discord.Activity, error) {
 	mmr, err := fetchMMR(name, tag, region)
 	if err != nil {
-		return err
+		return discord.Activity{}, err
 	}
 
 	rank := mmr.Data.Current.Tier.Name
@@ -78,11 +78,12 @@ func updatePresence(name, tag, region string) error {
 	}
 	change := fmt.Sprintf("%+d RR за последний матч", mmr.Data.Current.LastChange)
 
-	return discord.SetActivity(discord.Activity{
-		Details:   fmt.Sprintf("%s — %d RR", rank, mmr.Data.Current.RR),
-		State:     change,
-		LargeText: fmt.Sprintf("%s#%s • %s", name, tag, strings.ToUpper(region)),
-	})
+	return discord.Activity{
+		Details:    fmt.Sprintf("%s — %d RR", rank, mmr.Data.Current.RR),
+		State:      change,
+		LargeImage: envOr("DISCORD_LARGE_IMAGE", "valorant"),
+		LargeText:  fmt.Sprintf("%s#%s • %s", name, tag, strings.ToUpper(region)),
+	}, nil
 }
 
 func runPresence() {
@@ -103,13 +104,31 @@ func runPresence() {
 		}
 
 		log.Printf("Discord Rich Presence connected for %s#%s", name, tag)
+		var activity discord.Activity
+		var nextStatsUpdate time.Time
 		for {
-			if err := updatePresence(name, tag, region); err != nil {
-				log.Printf("Rich Presence update failed: %v", err)
-				discord.Logout()
-				break
+			if time.Now().After(nextStatsUpdate) {
+				updated, err := buildPresence(name, tag, region)
+				if err != nil {
+					log.Printf("Stats update failed; retrying in 15s: %v", err)
+					nextStatsUpdate = time.Now().Add(15 * time.Second)
+				} else {
+					activity = updated
+					nextStatsUpdate = time.Now().Add(time.Minute)
+				}
 			}
-			time.Sleep(time.Minute)
+
+			if activity.Details != "" {
+				if err := discord.SetActivity(activity); err != nil {
+					log.Printf("Discord connection lost: %v", err)
+					discord.Logout()
+					break
+				}
+			}
+
+			// Valorant may overwrite Discord activity while a match is running.
+			// Reassert the cached presence frequently without hitting HenrikDev again.
+			time.Sleep(15 * time.Second)
 		}
 		time.Sleep(15 * time.Second)
 	}

@@ -94,7 +94,7 @@ func runPresence() {
 	tag := strings.TrimSpace(os.Getenv("RIOT_TAG"))
 	region := strings.ToLower(envOr("RIOT_REGION", "eu"))
 	if name == "" || tag == "" {
-		log.Print("RIOT_NAME and RIOT_TAG are not configured in .env; Rich Presence disabled")
+		log.Print("RIOT_NAME and RIOT_TAG are missing: copy .env.example to .env, fill them in, then restart; Rich Presence disabled")
 		return
 	}
 

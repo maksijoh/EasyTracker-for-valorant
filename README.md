@@ -5,7 +5,13 @@
 
 ## Настройка
 
-Создайте `.env` в папке проекта:
+Скопируйте отслеживаемый шаблон `.env.example` в локальный `.env`:
+
+```powershell
+Copy-Item .env.example .env
+```
+
+Затем заполните `.env` своими значениями:
 
 ```env
 ACCESS_TOKEN=ваш_ключ_HenrikDev

@@ -31,19 +31,13 @@ HenrikDev API и показывает его в Discord Rich Presence. Оно о
 - **Riot Tag** — часть Riot ID после `#`;
 - **Регион** — `eu`, `na`, `latam`, `br`, `ap` или `kr`.
 
-Настройки и API key сохраняются только локально в `.env` рядом с EXE. Этот файл
-игнорируется Git и не должен публиковаться.
+Настройки и API key сохраняются только локально в `.env`.
 
 Чтобы снова открыть окно настройки:
 
 ```powershell
 .\EasyTracker-v1.1.1-windows-amd64.exe --configure
 ```
-
-## Иконка Discord
-
-Иконка Rich Presence загружается автоматически по HTTPS из этого репозитория.
-Вручную добавлять Art Asset в Discord Developer Portal не требуется.
 
 ## Диагностика
 
